@@ -1,0 +1,16 @@
+{
+  "name": "stats_helper",
+  "version": "0.0.0",
+  "description": "A helper function for smiley ifix",
+  "main": "stats_worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Craig Ferguson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "firebase": "^2.4.1",
+    "moment": "^2.11.2"
+  }
+}
