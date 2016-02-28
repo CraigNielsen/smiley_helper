@@ -101,4 +101,4 @@ var addEntry = function() {
     timestamp: time
   });
 };
-setInterval(addEntry, 10000);
+// setInterval(addEntry, 10000);
