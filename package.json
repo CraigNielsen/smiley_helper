@@ -9,6 +9,8 @@
   "author": "Craig Ferguson",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.5.2",
+    "bluebird": "^3.3.3",
     "express": "^4.13.4",
     "firebase": "^2.4.1",
     "moment": "^2.11.2"
