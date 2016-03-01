@@ -5,10 +5,10 @@ var dayCount;
 var weekCount;
 var monthCount;
 
-var ref = new Firebase("https://smiley-helper.firebaseio.com/collectionsBackup");
-var statsRefDay = new Firebase("https://smiley-helper.firebaseio.com/stats/today");
-var statsRefWeek = new Firebase("https://smiley-helper.firebaseio.com/stats/thisWeek");
-var statsRefMonth = new Firebase("https://smiley-helper.firebaseio.com/stats/thisMonth");
+var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
+var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/today");
+var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisWeek");
+var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisMonth");
 
 var MINS = 60 * 1000;
 
