@@ -4,7 +4,8 @@
   "description": "A helper function for smiley ifix",
   "main": "stats_worker.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node stats_worker.js"
   },
   "author": "Craig Ferguson",
   "license": "ISC",
