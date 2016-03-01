@@ -1,3 +1,8 @@
+var Firebase = require("firebase");
+
+var oldRef= new Firebase("https://ifixgroup.firebaseio.com/collections").orderByChild("timestamp").limitToLast(100);
+var newRef= new Firebase("https://smiley-helper.firebaseio.com/collectionsBackupNoGlobal");
+
 
 function copyFbRecord(oldRef, newRef) {
   oldRef.once('value', function(snap) {
@@ -8,9 +13,9 @@ function copyFbRecord(oldRef, newRef) {
         console.log("Successfully Copied Firebase Database");
       }
     });
-  });
+  }).then(function () {console.log("copied Successfully")});
 }
-// copyFbRecord(refT,newRef1);
+copyFbRecord(oldRef,newRef);
 // newRef1.remove();
 
 
@@ -30,4 +35,4 @@ var addEntry = function() {
     timestamp: time
   });
 };
-setInterval(addEntry, 10000);
+// setInterval(addEntry, 10000);
