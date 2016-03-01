@@ -13,7 +13,7 @@ var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections/s
 var MINS = 60 * 1000;
 
 var write_to_stats_page = function(callback) {
-  console.log("write to stats page was called");
+  console.log("writing to stats page");
   statsRefDay.set({
     "count": dayCount
   });
@@ -75,7 +75,6 @@ setInterval(function() {
 }, 30 * MINS);
 
 function updateCount(callback) {
-  console.log("updateCount was called");
   dayCount++;
   monthCount++;
   weekCount++;
