@@ -37,10 +37,9 @@ var refresh = function(currentTime) {
     now = moment();
     var refThisMonth = ref.orderByChild("timestamp").startAt(now.subtract(30, 'days').valueOf());
     now = moment();
-    console.log("refreshing at: " + now.valueOf());
+    console.log("refreshing at: " + now.format("HH mm ss"));
 
     refThisMonth.once("value", function(snapshot0) {
-      console.log("old month count " + monthCount);
       monthCount = snapshot0.numChildren();
       return monthCount;
     }).then(function(mc) {
@@ -60,7 +59,7 @@ var refresh = function(currentTime) {
       dayCount = snapshot2.numChildren();
       return dayCount;
     }).then(function(dc) {
-      console.log("daycount is set to :" + dc);
+      console.log("daycount is set to :" + dc.numChildren());
       statsRefDay.set({
         "count": dayCount
       })
