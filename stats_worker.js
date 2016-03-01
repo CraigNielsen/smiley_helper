@@ -6,9 +6,9 @@ var weekCount;
 var monthCount;
 
 var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
-var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/today");
-var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisWeek");
-var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisMonth");
+var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/today");
+var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisWeek");
+var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisMonth");
 
 var MINS = 60 * 1000;
 
