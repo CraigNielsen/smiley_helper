@@ -10,7 +10,7 @@ var monthCount;
 // var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisWeek");
 // var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/thisMonth");
 
-var ref = new Firebase("https://smiley-helper.firebaseio.com/collectionsBackup");
+var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
 var statsRefDay = new Firebase("https://smiley-helper.firebaseio.com/stats/today");
 var statsRefWeek = new Firebase("https://smiley-helper.firebaseio.com/stats/thisWeek");
 var statsRefMonth = new Firebase("https://smiley-helper.firebaseio.com/stats/thisMonth");
@@ -35,7 +35,7 @@ var refresh = function(currentTime) {
   if (currentTime < 30) {
     console.log("refreshing stats counters");
     now = moment();
-    var refToday = ref.orderByChild("timestamp").startAt(now.subtract(1, 'hour').valueOf());
+    var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').valueOf());
     now = moment();
     var refThisWeek = ref.orderByChild("timestamp").startAt(now.subtract(7, 'days').valueOf());
     now = moment();
