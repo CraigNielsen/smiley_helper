@@ -1,6 +1,7 @@
 var Firebase = require("firebase");
 var moment = require("moment");
 var async = require("async");
+// var request = require('request');
 var dayCount;
 var weekCount;
 var monthCount;
@@ -9,6 +10,7 @@ var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
 var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/today");
 var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisWeek");
 var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisMonth");
+// var statsRefAll = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/allTime");
 
 var MINS = 60 * 1000;
 
@@ -37,6 +39,7 @@ var refresh = function(currentTime) {
     now = moment();
     var refThisMonth = ref.orderByChild("timestamp").startAt(now.subtract(30, 'days').valueOf());
     now = moment();
+
     console.log("refreshing at: " + now.format("HH mm ss"));
 
     refThisMonth.once("value", function(snapshot0) {
@@ -63,7 +66,8 @@ var refresh = function(currentTime) {
       statsRefDay.set({
         "count": dayCount
       })
-    })
+    });
+    // do the check and update of the allOfTIme ref
   }
 };
 
