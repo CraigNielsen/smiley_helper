@@ -1,19 +1,19 @@
 var Firebase = require("firebase");
 var moment = require("moment");
 var async = require("async");
-// var request = require('request');
+var request = require("request");
 var dayCount;
 var weekCount;
 var monthCount;
+var allTimeCount;
 
 var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
 var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/today");
 var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisWeek");
 var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisMonth");
-// var statsRefAll = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/allTime");
+var statsRefAll = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/allTime");
 
 var MINS = 60 * 1000;
-
 var write_to_stats_page = function(callback) {
   console.log("writing to stats page");
   statsRefDay.set({
@@ -25,24 +25,25 @@ var write_to_stats_page = function(callback) {
   statsRefMonth.set({
     "count": monthCount
   });
+  statsRefAll.set({
+    "count": allTimeCount
+  });
   callback(null);
 };
 
-var refresh = function(currentTime) {
+  var refresh = function(currentTime) {
   //if time is before 00:30 in the day: refresh (this is checked every 30 mins)
-  if (currentTime < 30) {
-    console.log("refreshing stats counters");
 
+  if (currentTime < 30) {
     now = moment();
-    // console.log(now.startOf('month').format('DD HH MM SS'));
     var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').valueOf());
     now = moment();
     var refThisWeek = ref.orderByChild("timestamp").startAt(now.startOf('week').valueOf());
     now = moment();
-    var refThisMonth = ref.orderByChild("timestamp").startAt(now.subtract(30, 'days').valueOf());
+    var refThisMonth = ref.orderByChild("timestamp").startAt(now.startOf('month').valueOf());
     now = moment();
 
-    console.log("refreshing at: " + now.format("HH mm ss"));
+    console.log("refreshing stats counters at: " + now.format("HH:mm:ss"));
 
     refThisMonth.once("value", function(snapshot0) {
       monthCount = snapshot0.numChildren();
@@ -69,7 +70,11 @@ var refresh = function(currentTime) {
         "count": dayCount
       })
     });
-    // do the check and update of the allOfTIme ref
+    request('http://capetown.ifix.co.za/api/global/repairs/collections/count', function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        allTimeCount = Number(body);
+        statsRefAll.set({"count": Number(body)})
+  }});
   }
 };
 
