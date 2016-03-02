@@ -1,6 +1,7 @@
 var Firebase = require("firebase");
 var moment = require("moment");
 var async = require("async");
+var request = require("request");
 var dayCount;
 var weekCount;
 var monthCount;
