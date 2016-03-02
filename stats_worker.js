@@ -15,10 +15,12 @@ var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
 var statsRefDay = new Firebase("https://smiley-helper.firebaseio.com/stats/today");
 var statsRefWeek = new Firebase("https://smiley-helper.firebaseio.com/stats/thisWeek");
 var statsRefMonth = new Firebase("https://smiley-helper.firebaseio.com/stats/thisMonth");
+var statsRefAll = new Firebase("https://smiley-helper.firebaseio.com/stats/allTime");
 var MINS = 60 * 1000;
 
 var write_to_stats_page = function(callback) {
   console.log("write to stats page was called");
+})
   statsRefDay.set({
     "count": dayCount
   });
@@ -31,8 +33,9 @@ var write_to_stats_page = function(callback) {
   callback(null);
 };
 
-var refresh = function(currentTime) {
+  var refresh = function(currentTime) {
   //if time is before 00:30 in the day: refresh (this is checked every 30 mins)
+
   if (currentTime < 30) {
     console.log("refreshing stats counters");
     now = moment();
@@ -42,7 +45,7 @@ var refresh = function(currentTime) {
     now = moment();
     var refThisMonth = ref.orderByChild("timestamp").startAt(now.startOf('month').valueOf());
     now = moment();
-    console.log("refreshing at: " + now.format("HH mm ss"));
+    console.log("refreshing at: " + now.format("HH:mm:ss"));
 
     refThisMonth.once("value", function(snapshot0) {
       monthCount = snapshot0.numChildren();
@@ -69,6 +72,10 @@ var refresh = function(currentTime) {
         "count": dayCount
       })
     })
+    request('http://capetown.ifix.co.za/api/global/repairs/collections/count', function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        statsRefAll.set({"count": Number(body)})
+  }})
   }
 };
 
