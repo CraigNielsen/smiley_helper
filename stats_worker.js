@@ -5,6 +5,7 @@ var request = require("request");
 var dayCount;
 var weekCount;
 var monthCount;
+var allTimeCount;
 
 // var ref = new Firebase("https://ifixgroup.firebaseio.com/collections");
 // var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections/stats/today");
@@ -29,6 +30,9 @@ var write_to_stats_page = function(callback) {
   });
   statsRefMonth.set({
     "count": monthCount
+  });
+  statsRefAll.set({
+    "count": allTimeCount
   });
   callback(null);
 };
