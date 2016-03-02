@@ -32,10 +32,12 @@ var refresh = function(currentTime) {
   //if time is before 00:30 in the day: refresh (this is checked every 30 mins)
   if (currentTime < 30) {
     console.log("refreshing stats counters");
+
     now = moment();
+    // console.log(now.startOf('month').format('DD HH MM SS'));
     var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').valueOf());
     now = moment();
-    var refThisWeek = ref.orderByChild("timestamp").startAt(now.subtract(7, 'days').valueOf());
+    var refThisWeek = ref.orderByChild("timestamp").startAt(now.startOf('week').valueOf());
     now = moment();
     var refThisMonth = ref.orderByChild("timestamp").startAt(now.subtract(30, 'days').valueOf());
     now = moment();
