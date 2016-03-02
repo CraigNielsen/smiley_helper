@@ -31,7 +31,7 @@ var refresh = function(currentTime) {
   if (currentTime < 30) {
     console.log("refreshing stats counters");
     now = moment();
-    var refToday = ref.orderByChild("timestamp").startAt(now.subtract(1, 'hour').valueOf());
+    var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').fromNow().valueOf());
     now = moment();
     var refThisWeek = ref.orderByChild("timestamp").startAt(now.subtract(7, 'days').valueOf());
     now = moment();
