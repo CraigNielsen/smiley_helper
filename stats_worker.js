@@ -37,9 +37,9 @@ var refresh = function(currentTime) {
     now = moment();
     var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').valueOf());
     now = moment();
-    var refThisWeek = ref.orderByChild("timestamp").startAt(now.subtract(7, 'days').valueOf());
+    var refThisWeek = ref.orderByChild("timestamp").startAt(now.startOf('week').valueOf());
     now = moment();
-    var refThisMonth = ref.orderByChild("timestamp").startAt(now.subtract(30, 'days').valueOf());
+    var refThisMonth = ref.orderByChild("timestamp").startAt(now.startOf('month').valueOf());
     now = moment();
     console.log("refreshing at: " + now.format("HH mm ss"));
 
