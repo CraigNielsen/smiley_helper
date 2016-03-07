@@ -52,6 +52,14 @@ var write_to_stats_page = function(callback) {
 
     console.log("refreshing stats counters at: " + now.format("HH:mm:ss"));
 
+    refHour.once("value", function(snapshot0) {
+      hourCount = snapshot0.numChildren();
+      return hourCount;
+    }).then(function(mc) {
+      statsRefHour.set({
+        "count": hourCount
+      })
+    });
     refThisMonth.once("value", function(snapshot0) {
       monthCount = snapshot0.numChildren();
       return monthCount;
@@ -66,14 +74,6 @@ var write_to_stats_page = function(callback) {
     }).then(function(wc) {
       statsRefWeek.set({
         "count": weekCount
-      })
-    });
-    refHour.once("value", function(snapshot) {
-      hourCount = snapshot.numChildren();
-      return hourCount;
-    }).then(function(dc) {
-      statsRefHour.set({
-        "count": hourCount
       })
     });
     refToday.once("value", function(snapshot2) {
@@ -99,6 +99,20 @@ setInterval(function() {
   var ctime = now.format('mm');
   refresh(ctime);
 }, 30 * MINS);
+
+setInterval(function(){
+    now = moment();
+    var refHour= ref.orderByChild("timestamp").startAt(now.startOf('hour').valueOf());
+    refHour.once("value", function(snapshot) {
+    hourCount = snapshot.numChildren();
+    console.log("checking hour count");
+    return hourCount;
+  }).then(function(dc) {
+    statsRefHour.set({
+      "count": hourCount
+    })
+  });
+}, 1* MINS);
 
 function updateCount(callback) {
   hourCount++;
