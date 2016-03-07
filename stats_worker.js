@@ -68,8 +68,8 @@ var write_to_stats_page = function(callback) {
         "count": weekCount
       })
     });
-    refHour.once("value", function(snapshot2) {
-      hourCount = snapshot2.numChildren();
+    refHour.once("value", function(snapshot) {
+      hourCount = snapshot.numChildren();
       return hourCount;
     }).then(function(dc) {
       statsRefHour.set({
@@ -105,6 +105,7 @@ function updateCount(callback) {
   dayCount++;
   monthCount++;
   weekCount++;
+  allTimeCount++;
   callback(null);
 }
 var initialised = null;
