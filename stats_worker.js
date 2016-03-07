@@ -2,6 +2,7 @@ var Firebase = require("firebase");
 var moment = require("moment");
 var async = require("async");
 var request = require("request");
+var hourCount;
 var dayCount;
 var weekCount;
 var monthCount;
@@ -12,10 +13,14 @@ var statsRefDay = new Firebase("https://ifixgroup.firebaseio.com/collections-sta
 var statsRefWeek = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisWeek");
 var statsRefMonth = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisMonth");
 var statsRefAll = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/allTime");
+var statsRefHour = new Firebase("https://ifixgroup.firebaseio.com/collections-stats/thisHour");
 
 var MINS = 60 * 1000;
 var write_to_stats_page = function(callback) {
   console.log("writing to stats page");
+  statsRefHour.set({
+    "count": hourCount
+  });
   statsRefDay.set({
     "count": dayCount
   });
@@ -32,9 +37,11 @@ var write_to_stats_page = function(callback) {
 };
 
   var refresh = function(currentTime) {
-  //if time is before 00:30 in the day: refresh (this is checked every 30 mins)
+  //if time is before xx:30 in the day: refresh (this is checked every 30 mins)
 
   if (currentTime < 30) {
+    now = moment();
+    var refHour= ref.orderByChild("timestamp").startAt(now.startOf('hour').valueOf());
     now = moment();
     var refToday = ref.orderByChild("timestamp").startAt(now.startOf('day').valueOf());
     now = moment();
@@ -61,6 +68,14 @@ var write_to_stats_page = function(callback) {
         "count": weekCount
       })
     });
+    refHour.once("value", function(snapshot2) {
+      hourCount = snapshot2.numChildren();
+      return hourCount;
+    }).then(function(dc) {
+      statsRefHour.set({
+        "count": hourCount
+      })
+    });
     refToday.once("value", function(snapshot2) {
       dayCount = snapshot2.numChildren();
       return dayCount;
@@ -81,11 +96,12 @@ var write_to_stats_page = function(callback) {
 refresh(25);
 setInterval(function() {
   var now = moment();
-  var ctime = now.format('HHmm');
+  var ctime = now.format('mm');
   refresh(ctime);
 }, 30 * MINS);
 
 function updateCount(callback) {
+  hourCount++;
   dayCount++;
   monthCount++;
   weekCount++;
